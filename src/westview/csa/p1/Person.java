@@ -54,8 +54,9 @@ public class Person {
 		if (status == 4 && duration <= 0) {
 			
 			
-			if (Math.random() < 0.70) {
+			if (Math.random() < 0.50) {
 				status = 5;
+				duration = 5000;
 			} else {
 				status = 1;
 			}
@@ -67,10 +68,35 @@ public class Person {
 			duration -= 16;
 		}
 		
-		if (status == 4 && duration <= 0) {
-			
+		if (status == 5 && duration <= 0) {
+			status = 2;
+			duration = 5000;
+			speedX = 0;
+			speedY = 0;
+		}
+		else {
+			duration -= 16;
 		}
 		
+		if (status == 2 && duration <= 0 ) {
+			
+			if (Math.random() < 0.50) {
+				status = 3;
+				speedX = 3;
+				speedY = 4;
+			} else {
+				
+				 status = 2;
+			}
+		}
+		else {
+			duration -= 16;
+		}
+		
+		
+		
+		
+	
 		
 		
 		
@@ -112,21 +138,20 @@ public class Person {
 		// write the if-statement to check if the two Rectangles
 		// are intersecting
 		if(thisObj.intersects(otherObj)) {
-			if (this.status == 0 && otherPerson.status == 4) {}
-			this.status = 4;
-		
-		if (this.status == 0 && otherPerson.status == 4) {
-		this.status = 4;	
-		}
-		
-		
+			if ((this.status == 0 || this.status == 1) && (otherPerson.status == 4 || otherPerson.status == 5)) {
+				this.status = 4;
+
+			}
+			
 		
 		
 	// this object infects other p=object
-		if (otherPerson.status == 0 && this.status == 4) {
+		if ((otherPerson.status == 0 || otherPerson.status == 1) && (this.status == 4 || this.status == 5)) {
 			otherPerson.status = 4; // otherperson getst infected by this object
 			
 		}
+		
+		
 		
 		return true;
 		}
